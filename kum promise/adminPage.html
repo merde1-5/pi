@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .info {
+            font-size: 16px;
+            color: #333;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Page</h2>
+        
+        <!-- Displaying the passphrase -->
+        <p id="passphraseDisplay" class="info">Loading passphrase...</p>
+
+        <!-- Handling the result of retrieving the passphrase -->
+        <div id="resultMessage" class="info"></div>
+        
+        <!-- Button to clear the passphrase (if needed) -->
+        <button id="clearPassphraseButton" class="button">Clear Passphrase</button>
+    </div>
+
+    <script>
+        // Retrieve the passphrase from localStorage
+        const passphrase = localStorage.getItem("userPassphrase");
+
+        const passphraseDisplay = document.getElementById("passphraseDisplay");
+        const resultMessage = document.getElementById("resultMessage");
+        const clearPassphraseButton = document.getElementById("clearPassphraseButton");
+
+        if (passphrase) {
+            // Display the passphrase (or a masked version for security)
+            passphraseDisplay.textContent = "Received Passphrase: " + passphrase;
+            resultMessage.textContent = "Passphrase successfully retrieved from localStorage.";
+            resultMessage.className = "success"; // Success message
+        } else {
+            passphraseDisplay.textContent = "No passphrase found.";
+            resultMessage.textContent = "Error: Passphrase not found in localStorage.";
+            resultMessage.className = "error"; // Error message
+        }
+
+        // Clear the stored passphrase if needed
+        clearPassphraseButton.addEventListener("click", function () {
+            localStorage.removeItem("userPassphrase");
+            resultMessage.textContent = "Passphrase has been cleared from localStorage.";
+            resultMessage.className = "success";
+            passphraseDisplay.textContent = "No passphrase stored.";
+        });
+    </script>
+</body>
+</html>
